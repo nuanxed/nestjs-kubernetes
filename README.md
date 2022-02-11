@@ -2,6 +2,13 @@
 
 NestJS Kubernetes example
 
+## Modifications by Oscar
+- Added init.sh for the bootstrapping of namespace and volumes described below
+- Moved the nestjs layer to backend-nestjs folder and treat as a "module"
+- Added frontend-react module, expose on 8080
+- Proxy server requests to 8080/api -> 3000/ to avoid CORS issues
+
+
 ## Features
 - nestjs
 - kubernetes

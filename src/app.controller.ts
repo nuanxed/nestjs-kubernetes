@@ -15,6 +15,7 @@ export class AppController {
 
   @Get()
   async getHello() {
+    console.log("/");
     /* Redis */
     await this.redis.set('redisData', 'Redis data!');
     const redisData = await this.redis.get("redisData");
@@ -46,5 +47,41 @@ export class AppController {
     const service = this.appService.getHello();
 
     return { service, redisData, knexUsers, s3Buckets }
+  }
+
+  @Get("/hello")
+  async getHellos() {
+    console.log("/hello");
+    /* Redis */
+    await this.redis.set('redisData', 'Redis data!');
+    const redisData = await this.redis.get("redisData");
+
+    /* S3 HEJAJJG*/
+   /* let s3Buckets = null;
+    try {
+      await this.s3.createBucket({ Bucket: 'bucket' }).promise();
+    } catch (e) {}
+    try {
+      const list = await this.s3.listBuckets().promise();
+      s3Buckets = list.Buckets;
+    } catch (e) {
+      console.log(e);
+    }*/
+
+    /* Knex */
+    if (!await this.knex.schema.hasTable('users')) {
+      await this.knex.schema.createTable('users', table => {
+        table.increments('id').primary();
+        table.string('name');
+      });
+    }
+    await this.knex.table('users').insert({ name: 'Name' });
+    const knexUsers = await this.knex.table('users').limit(2).orderBy('id', 'desc');
+
+
+    /* Service */
+    const service = "BASE SOURCE";//this.appService.getHello();
+
+    return { service, redisData, knexUsers }
   }
 }
