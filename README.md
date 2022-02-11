@@ -7,6 +7,7 @@ NestJS Kubernetes example
 - Moved the nestjs layer to backend-nestjs folder and treat as a "module"
 - Added frontend-react module, expose on 8080
 - Proxy server requests to 8080/api -> 3000/ to avoid CORS issues
+- Added swagger to nestjs http://localhost:3000/swagger
 
 
 ## Features
